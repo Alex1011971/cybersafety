@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <form action="/" method="get" class="mb-3">
+            <div class="input-group">
+                <input type="text" class="form-control" name="q" placeholder="Поиск (троян, vpn...)" value="{{ search_query }}">
+                <button class="btn btn-primary" type="submit">Искать</button>
+            </div>
+        </form>
+
+        {% if instructions %}
+            <div class="list-group">
+                {% for instr in instructions %}
+                    {% if instr %}
+                        <a href="/instruction/{{ instr[0] }}" class="list-group-item list-group-item-action">
+                            📄 {{ instr[1] }}
+                </a>
+            {% else %}
+                <div class="alert alert-warning">Элемент списка пуст.</div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% else %}
+        <div class="alert alert-warning">Ничего не найдено.</div>
+    {% endif %}
+</div>
+
+<!-- Правая колонка -->
+<div class="col-md-8">
+    {% if detail_title %}
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">📄 {{ detail_title }}</h4>
+            </div>
+            <div class="card-body">
+                {{ detail_content | safe }}
+            </div>
+        </div>
+    {% else %}
+        <div class="p-5 bg-light rounded-3 shadow-sm text-center">
+            <h1>🛡 Кибербезопасность</h1>
+            <p class="lead">Выберите инструкцию из списка слева или воспользуйтесь поиском, чтобы узнать, как защитить свои данные.</p>
+        </div>
+    {% endif %}
+</div>
+</div>
+{% endblock %}
